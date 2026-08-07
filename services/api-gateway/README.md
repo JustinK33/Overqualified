@@ -1,14 +1,14 @@
-# Core-API
+# API Gateway
 
-This is the core api for the project
-
-## What it does (come back later)
+## What it does
+API Gateway: this is where all client facing request hit and get transfered to the other microservices
 
 ## Tech Stack
 
 - Python
 - FastAPI
 - Uvicorn
+- httpx
 
 ## Install and Run
 
