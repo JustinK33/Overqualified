@@ -1,0 +1,10 @@
+services:
+  db: 
+    image: postgres:18
+    env_file:
+      - .env
+    volumes:
+    - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:
