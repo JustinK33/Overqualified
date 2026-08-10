@@ -16,4 +16,6 @@ ask yourself: what would go wrong if for our users if the database ever got leak
 initial sketch
 ![Auth Flow 1](services/auth-service/docs/auth-design1.png)
 
-## for password hasing we used bcrpyt and salting which just results in different hashes for the same passwords.
+## things i learned
+- for password hashing we used bcrpyt and salting which just results in different hashes for the same passwords.
+- use with block to not have to close() each time
