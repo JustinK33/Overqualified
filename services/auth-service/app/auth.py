@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from datetime import datetime
+import bcrypt
 
 app = FastAPI(title="auth-service")
 
@@ -12,6 +13,10 @@ class User(BaseModel):
     password: str #hashvalue
     created_at: datetime = Field(default_factory=datetime.now)
 
+def hashed(password: bytes):
+    hashed_pass = bcrypt.hashpw(password, bcrypt.gensalt())
+    return hashed_pass
+
 @app.get("/register")
 async def register(username: str, password: str):
-    # come back and do this
+    pass
