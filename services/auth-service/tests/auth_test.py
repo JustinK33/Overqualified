@@ -1,4 +1,4 @@
-from app.auth import hashed
+from app.auth import hashed, register
 import bcrypt
 
 def test_hashed(password: str):
@@ -9,4 +9,4 @@ def test_hashed(password: str):
     else:
         print("not a match")
 
-test_hashed("asdasdsa")
+# test_hashed("asdasdsa")

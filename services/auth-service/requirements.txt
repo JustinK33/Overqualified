@@ -3,3 +3,5 @@ uvicorn
 pydantic
 bcrypt
 psycopg2-binary
+python-dotenv
+pyjwt
