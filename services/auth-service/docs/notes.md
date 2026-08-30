@@ -24,6 +24,7 @@ bcrpyt docs - https://github.com/pyca/bcrypt
 - for auto incrementing sql columns "GENERATED ALWAYS AS IDENTITY"
 - use pydantic model as type for input values
 - (5) is an int but (5,) is a tuple
+- when using fastapi use the fastapi.HTTPException rather than any built in exceptions
 
 ## unrelated learning
 normally we do this for version before 18
