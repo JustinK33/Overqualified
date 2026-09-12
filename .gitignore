@@ -1,6 +1,9 @@
 *.env
+*.env.local
 *venv
 .vscode
 __pycache__
 CLAUDE.md
 TIMELINE.md
+
+test-service/
