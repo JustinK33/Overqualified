@@ -92,6 +92,8 @@ async def login(user: UserInput):
 async def refresh():
     pass # create a refresh token endpoint
     # refresh token -> new access token
+    # initally have it set a 1 hr exp
+    
 
 # eventually we should implement prtected endpoints: require access token (or add a decorater)
 
