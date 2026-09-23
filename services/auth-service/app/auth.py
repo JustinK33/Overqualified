@@ -58,22 +58,26 @@ async def login(user: UserInput):
         host=os.getenv("DB_HOST"), 
         port=os.getenv("DB_PORT")
     )
-    
+
     try:
         with conn.cursor() as cur:
-            query = "SELECT hashed_password FROM users WHERE username = (%s);"
-            cur.execute(query, (user.username, ))
-            hashed_pass = cur.fetchone() # i set this as the pass since cur.execute return None
+            query = "SELECT hashed_password FROM users WHERE username = %s;"
+            cur.execute(
+                query, 
+                (user.username,)
+            )
+            row = cur.fetchone() # i set this as the pass since cur.execute return None
             # this solves the raised None type warning in the check pw
-            if not hashed_pass or hashed_pass is None:
-                raise TypeError("The password is none or doesnt exists")
-            elif bcrypt.checkpw(user.password.encode("utf-8"), hashed_pass[0]):
-                encoded = jwt.encode({"user": user.username}, key, algorithm="HS256")
-                return encoded
-    except Exception as e:
-        conn.rollback()
-        print(f"Login failed: {e}")
-        raise
+            if not row or not bcrypt.checkpw(
+                user.password.encode("utf-8"), 
+                bytes(row[0])
+            ):
+                raise HTTPException(status_code=401, detail="invalid username or password")
+
+            token = jwt.encode({"user": user.username}, key, algorithm="HS256")
+            # eventually we should include the payload info too like:
+            # "exp": for expiration time, "sub": standard user identity claim, "type": access or refresh
+            return {"access_token": token, "type_type": "bearer"}
     
     finally:
         conn.close()
@@ -84,11 +88,16 @@ async def login(user: UserInput):
 # A new psycopg2.connect() on every request is expensive and doesn't scale. Look up connection pooling, psycopg2.pool 
 # or an async driver like asyncpg since your route is async def already.
 
-# print(f"Login failed: {e}") in production code: what's the standard library module 
-# for this that gives you levels, timestamps, and configurable output?
+@app.post("/refresh")
+async def refresh():
+    pass # create a refresh token endpoint
+    # refresh token -> new access token
+    # initally have it set a 1 hr exp
+    
 
-# When auth fails, what should the client actually get back? Right now a failed check pw returns nothing and raises an unbound 
-# var error, not a proper 401. What does FastAPI give you for returning specific status codes?
+# eventually we should implement prtected endpoints: require access token (or add a decorater)
 
-# Distinguishing "user not found" from "wrong password" in your error messages is a security smell. 
-# Do you know why, and what the standard response is regardless of which one failed?
+@app.post("/logout")
+async def logout():
+    pass # create logout endpoint
+    # should invalidate refresh token and excelidraw it b4 anything

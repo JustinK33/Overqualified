@@ -1,0 +1,16 @@
+# Overqualified
+
+A platform for finding your next internships.
+
+## What it does
+right now the team is working on building this out.
+
+## Architecture
+
+| Service | Language | Role |
+| --- | --- | --- |
+| 'auth' | Python | Handles full jwt authenication flow |
+| 'data-pipeline' | Python | fill in later |
+| 'ingestion-service' | Python | fill in later |
+| 'matching-engine' | Python | fill in later |
+| 'search-service' | Python | fill in later |
